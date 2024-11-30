@@ -1,0 +1,18 @@
+meta {
+  name: findone
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:5000/api/auth/login
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email":"brodey5@gmail.com",
+    "password":"passingword"
+  }
+}
