@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 const validateJWT = (req, res, next) => {
+    try {
     const token = req.headers.authorization.split(' ')[1]
     if (!token) {
         res.status(401).json({
@@ -19,6 +20,13 @@ const validateJWT = (req, res, next) => {
         })
     }
     next();
+    }catch(err) {
+        res.json({
+            Error: err,
+            message: err.message
+        })
+    }
+    
 
 }
 
