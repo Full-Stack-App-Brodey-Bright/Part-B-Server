@@ -7,20 +7,25 @@ const User = require('../models/User');
 
 const validateJWT = (req, res, next) => {
     try {
-    const token = req.headers.authorization.split(' ')[1]
-    if (!token) {
-        res.status(401).json({
-            message: "Error token was not provided. Please login first."
-        })
-    } else {
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-        res.json({
-            login: true,
-            data: decodedToken
-        })
-    }
+        if (!req.headers.authorization) {
+            res.status(401).json({
+                message: "Error token was not provided. Please login first."
+            })
+        }
+        const token = req.headers.authorization.split(' ')[1]
+        if (!token) {
+            res.status(401).json({
+                message: "Error token was not provided. Please login first."
+            })
+        } else {
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
+            res.json({
+                login: true,
+                data: decodedToken
+            })
+        }
     next();
-    }catch(err) {
+    } catch(err) {
         res.json({
             Error: err,
             message: err.message
