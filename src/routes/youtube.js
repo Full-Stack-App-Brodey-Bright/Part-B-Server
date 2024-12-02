@@ -12,11 +12,7 @@ router.get("/youtube", validateJWT, async (req, res) => {
         data: result
     })
 })
-router.post("/youtubeauth", validateJWT, (req, res) => {
-    const youtubeToken = req.originalUrl
-    console.log(youtubeToken)
-    res.json({
-        youtubeToken
-    })
+router.post("/youtubeauth", validateJWT, async (req, res) => {
+    
 })
 module.exports = router
