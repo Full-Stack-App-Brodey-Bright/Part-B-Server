@@ -20,7 +20,7 @@ connectDB();
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 // Add other route imports here
-app.use('/', require('./routes/soundcloud'))
+app.use('/test', require('./routes/youtube'))
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
