@@ -1,18 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User');
-const validateJWT = require('../middleware/validateJWT');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("../models/User");
+const validateJWT = require("../middleware/validateJWT");
 
-router.get("/youtube", validateJWT, async (req, res) => {
-    const data = await fetch('')
-    const result = await data.json()
-    res.json({
-        data: result
-    })
-})
+router.get("/youtube", validateJWT, async (req, res) => {});
 router.post("/youtubeauth", validateJWT, async (req, res) => {
-    
-})
-module.exports = router
+    let JWT = req.headers.authorization.split(' ')[1]
+    let accessToken = req.body.accessToken;
+    User.collection.updateOne({JWT: JWT}, {$set: {YoutubeToken: {accessToken: accessToken}}})
+    res.status(200).json({
+        message: "Youtube Connection Success! Storing Keys"
+    })
+});
+module.exports = router;

@@ -16,9 +16,7 @@ const validateJWT = (req, res, next) => {
         if (!token) {
             throw new Error('Error token was not provided. Please login first.')
         } else {
-            // decodes jwt and returns it
-            const decodedToken = jwt.verify(token, process.env.JWT_SECRET)
-
+            next();
         }
     next();
     } catch(err) {

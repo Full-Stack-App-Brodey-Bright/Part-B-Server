@@ -37,6 +37,8 @@ router.post('/register', validateRegisterInput, async (req, res) => {
       { expiresIn: '1h' }
     );
 
+    User.collection.updateOne(user, {$set: {JWT: token}})
+
     res.status(201).json({ 
       message: 'User registered successfully', 
       token 
@@ -71,6 +73,8 @@ router.post('/login', async (req, res) => {
       process.env.JWT_SECRET, 
       { expiresIn: '1h' }
     );
+
+    User.collection.updateOne(user, {$set: {JWT: token}})
 
     res.json({ 
       message: 'Login successful', 

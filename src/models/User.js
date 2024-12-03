@@ -30,6 +30,9 @@ const UserSchema = new mongoose.Schema({
     refreshToken: String,
     expiryDate: Date
   },
+  JWT: {
+    type: String,
+  },
   playlists: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Playlist'
