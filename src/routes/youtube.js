@@ -5,7 +5,9 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const validateJWT = require("../middleware/validateJWT");
 
-router.get("/youtube", validateJWT, async (req, res) => {});
+// router.get("/youtube", validateJWT, async (req, res) => {});
+
+// Gets and Stores the youtube access token to the database
 router.post("/youtubeauth", validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
     let accessToken = req.body.accessToken;

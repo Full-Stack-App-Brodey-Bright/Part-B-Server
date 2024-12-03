@@ -8,11 +8,16 @@ const { connectDB } = require('./config/database');
 
 const app = express();
 
+
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(morgan('dev'));
 app.use(express.json());
+
+var corsOptions = {
+  origin: 'http://127.0.0.1:5173'
+}
 
 // Connect to Database
 connectDB();
