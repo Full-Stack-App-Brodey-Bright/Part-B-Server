@@ -1,0 +1,19 @@
+meta {
+  name: register local
+  type: http
+  seq: 6
+}
+
+post {
+  url: https://part-b-server.onrender.com/api/auth/register
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "username": "bbrodo",
+    "email":"brodey8801@gmail.com",
+    "password":"password"
+  }
+}
