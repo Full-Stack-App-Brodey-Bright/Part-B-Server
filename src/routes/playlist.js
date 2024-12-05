@@ -63,7 +63,6 @@ router.get('/', validateJWT, async (req, res) => {
     // Build query
     const query = {
       creator: user2,
-      _id: id,
       ...(publicOnly && { isPublic: true }),
       ...(genre && { genres: genre }),
       ...(search && { 
@@ -82,7 +81,7 @@ router.get('/', validateJWT, async (req, res) => {
     // };
 
     // Fetch playlists
-    const playlists = await Playlist.find(query);
+    const playlists = await Playlist.find(query || {_id: id});
     const total = await Playlist.countDocuments(query);
 
     res.json({
