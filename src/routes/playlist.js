@@ -3,6 +3,7 @@ const router = express.Router();
 const Playlist = require('../models/Playlist');
 const User = require('../models/User');
 const validateJWT = require("../middleware/validateJWT");
+const { Error } = require('mongoose');
 
 
 // Create a new playlist
@@ -47,10 +48,11 @@ router.post('/', validateJWT, async (req, res) => {
 router.get('/', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
     const user2 = await User.findOne({JWT: JWT})
-    if (!user2) {
-        throw new Error('Error token was not provided or expired. Please login.')
-    }
   try {
+    if (!user2) {
+        throw new Error('Error token was not provided. Please login first.')
+    }
+
     const { 
       page = 1, 
       limit = 10, 
@@ -59,6 +61,9 @@ router.get('/', validateJWT, async (req, res) => {
       publicOnly = false,
       id
     } = req.query;
+
+    console.log(req.query)
+    console.log(id)
 
     // Build query
     const query = {
