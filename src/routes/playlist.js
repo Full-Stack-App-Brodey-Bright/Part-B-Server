@@ -48,6 +48,9 @@ router.get('/', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
     console.log(JWT)
     const user2 = await User.findOne({JWT: JWT})
+    if (!user2) {
+        throw new Error('Error token was not provided or expired. Please login.')
+    }
     console.log(user2)
   try {
     const { 
