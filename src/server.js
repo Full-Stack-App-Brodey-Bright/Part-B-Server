@@ -24,8 +24,9 @@ connectDB();
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
-// Add other route imports here
 app.use('/auth', require('./routes/youtube'))
+const playlistRoutes = require('./routes/playlist');
+app.use('/api/playlists', playlistRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

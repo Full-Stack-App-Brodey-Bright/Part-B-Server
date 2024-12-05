@@ -18,7 +18,6 @@ const validateJWT = (req, res, next) => {
         } else {
             next();
         }
-    next();
     } catch(err) {
         res.json({
             Error: err
