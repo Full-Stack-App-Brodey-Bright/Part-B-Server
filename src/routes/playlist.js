@@ -86,7 +86,7 @@ router.get('/', validateJWT, async (req, res) => {
     // };
 
     // Fetch playlists
-    const playlists = await Playlist.find({_id: id} || query);
+    const playlists = await Playlist.find({_id: id} || {creator: user2});
     const total = await Playlist.countDocuments(query);
 
     res.json({
