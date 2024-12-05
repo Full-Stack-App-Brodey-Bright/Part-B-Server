@@ -62,10 +62,6 @@ router.get('/', validateJWT, async (req, res) => {
       id
     } = req.query;
 
-    console.log(req.query)
-    console.log(id)
-    console.log('jwt:' + JWT)
-    console.log(user2)
 
     // Build query
     const query = {
@@ -88,7 +84,12 @@ router.get('/', validateJWT, async (req, res) => {
     // };
 
     // Fetch playlists
-    const playlists = await Playlist.find({_id: id} || {creator: user2});
+    if (!id) {
+        const playlists = await Playlist.find({creator: user2});
+    } else {
+        const playlists = await Playlist.find({_id: id});
+    }
+    
     const total = await Playlist.countDocuments(query);
 
     res.json({
