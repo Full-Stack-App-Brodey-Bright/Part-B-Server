@@ -46,24 +46,24 @@ router.post('/', validateJWT, async (req, res) => {
 // Get user's playlists
 router.get('/', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
-    console.log(JWT)
     const user2 = await User.findOne({JWT: JWT})
     if (!user2) {
         throw new Error('Error token was not provided or expired. Please login.')
     }
-    console.log(user2)
   try {
     const { 
       page = 1, 
       limit = 10, 
       search = '', 
       genre, 
-      publicOnly = false 
+      publicOnly = false,
+      id
     } = req.query;
 
     // Build query
     const query = {
       creator: user2,
+      _id: id,
       ...(publicOnly && { isPublic: true }),
       ...(genre && { genres: genre }),
       ...(search && { 
@@ -75,11 +75,11 @@ router.get('/', validateJWT, async (req, res) => {
     };
 
     // Pagination and sorting
-    const options = {
-      limit: parseInt(limit),
-      skip: (page - 1) * limit,
-      sort: { createdAt: -1 }
-    };
+    // const options = {
+    //   limit: parseInt(limit),
+    //   skip: (page - 1) * limit,
+    //   sort: { createdAt: -1 }
+    // };
 
     // Fetch playlists
     const playlists = await Playlist.find(query);
