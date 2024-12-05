@@ -64,6 +64,8 @@ router.get('/', validateJWT, async (req, res) => {
 
     console.log(req.query)
     console.log(id)
+    console.log('jwt:' + JWT)
+    console.log(user2)
 
     // Build query
     const query = {
