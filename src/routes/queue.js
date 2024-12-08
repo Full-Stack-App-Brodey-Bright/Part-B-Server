@@ -10,12 +10,11 @@ const validateJWT = require("../middleware/validateJWT");
 // Create or Update Queue
 router.post('/', validateJWT, async (req, res) => {
   try {
+    let JWT = req.headers.authorization.split(' ')[1]
+    const user2 = await User.findOne({JWT: JWT})
     const { playlistId } = req.body;
-    console.log(req.body)
     // Fetch playlist and validate
     const playlist = await Playlist.findOne({_id: playlistId});
-    console.log({playlistId})
-    console.log(playlist)
     if (!playlist) {
       return res.status(404).json({ message: 'Playlist not found' });
     }
@@ -28,7 +27,7 @@ router.post('/', validateJWT, async (req, res) => {
 
     // Create or update queue
     const queue = await Queue.createOrUpdateQueue(
-      req.user._id, 
+      user2._id, 
       playlistId, 
       playlist.tracks
     );
