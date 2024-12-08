@@ -12,7 +12,6 @@ router.post('/', validateJWT, async (req, res) => {
     const user2 = await User.findOne({JWT: JWT})
     console.log(user2)
   try {
-    Playlist.init()
     const { title, description, tracks, isPublic, tags, genres } = req.body;
 
     // Create new playlist

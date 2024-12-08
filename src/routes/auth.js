@@ -8,7 +8,6 @@ const { validateRegisterInput } = require('../middleware/validateRegisterInput.j
 // User Registration Route
 router.post('/register', validateRegisterInput, async (req, res) => {
   try {
-    User.init()
     const { username, email, password } = req.body;
 
     // Check if user already exists
