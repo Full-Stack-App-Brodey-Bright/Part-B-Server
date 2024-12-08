@@ -13,7 +13,7 @@ router.post('/', validateJWT, async (req, res) => {
     const { playlistId } = req.body;
 
     // Fetch playlist and validate
-    const playlist = await Playlist.findById(playlistId).exec();
+    const playlist = await Playlist.findOne({_id: playlistId});
     console.log(playlistId)
     console.log(playlist)
     if (!playlist) {
