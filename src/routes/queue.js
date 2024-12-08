@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Queue = require('../models/Queue');
 const Playlist = require('../models/Playlist');
+const User = require('../models/User');
 const validateJWT = require("../middleware/validateJWT");
 
 // Middleware to verify authentication
