@@ -53,10 +53,12 @@ router.post('/', validateJWT, async (req, res) => {
 // Update Playback State
 router.patch('/state', validateJWT, async (req, res) => {
   try {
+    let JWT = req.headers.authorization.split(' ')[1]
+    const user2 = await User.findOne({JWT: JWT})
     const { playbackState, progress, currentTrack } = req.body;
 
     // Find user's queue
-    const queue = await Queue.findOne({ user: req.user._id });
+    const queue = await Queue.findOne({ user: user2.id });
     if (!queue) {
       return res.status(404).json({ message: 'No active queue found' });
     }
@@ -88,7 +90,9 @@ router.patch('/state', validateJWT, async (req, res) => {
 // Get Next Track
 router.get('/next', validateJWT, async (req, res) => {
   try {
-    const queue = await Queue.findOne({ user: req.user._id });
+    let JWT = req.headers.authorization.split(' ')[1]
+    const user2 = await User.findOne({JWT: JWT})
+    const queue = await Queue.findOne({ user: user2.id });
     if (!queue) {
       return res.status(404).json({ message: 'No active queue found' });
     }
