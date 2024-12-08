@@ -2,18 +2,13 @@ const express = require('express');
 const router = express.Router();
 const Queue = require('../models/Queue');
 const Playlist = require('../models/Playlist');
+const validateJWT = require("../middleware/validateJWT");
 
 // Middleware to verify authentication
-const authMiddleware = (req, res, next) => {
-  // Implement your authentication logic
-  if (!req.user) {
-    return res.status(401).json({ message: 'Unauthorized' });
-  }
-  next();
-};
+
 
 // Create or Update Queue
-router.post('/', authMiddleware, async (req, res) => {
+router.post('/', validateJWT, async (req, res) => {
   try {
     const { playlistId } = req.body;
 
@@ -54,7 +49,7 @@ router.post('/', authMiddleware, async (req, res) => {
 });
 
 // Update Playback State
-router.patch('/state', authMiddleware, async (req, res) => {
+router.patch('/state', validateJWT, async (req, res) => {
   try {
     const { playbackState, progress, currentTrack } = req.body;
 
@@ -89,7 +84,7 @@ router.patch('/state', authMiddleware, async (req, res) => {
 });
 
 // Get Next Track
-router.get('/next', authMiddleware, async (req, res) => {
+router.get('/next', validateJWT, async (req, res) => {
   try {
     const queue = await Queue.findOne({ user: req.user._id });
     if (!queue) {
@@ -126,7 +121,7 @@ router.get('/next', authMiddleware, async (req, res) => {
 });
 
 // Change Playback Mode
-router.patch('/mode', authMiddleware, async (req, res) => {
+router.patch('/mode', validateJWT, async (req, res) => {
   try {
     const { playbackMode } = req.body;
 
