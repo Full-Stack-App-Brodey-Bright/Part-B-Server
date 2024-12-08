@@ -62,7 +62,6 @@ router.patch('/state', validateJWT, async (req, res) => {
     if (!queue) {
       return res.status(404).json({ message: 'No active queue found' });
     }
-
     // Update queue state
     queue.playbackState = playbackState || queue.playbackState;
     queue.progress = progress !== undefined ? progress : queue.progress;
