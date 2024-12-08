@@ -14,7 +14,7 @@ router.post('/', validateJWT, async (req, res) => {
 
     // Fetch playlist and validate
     const playlist = await Playlist.findById(playlistId);
-    console.log(playlistId.json())
+    console.log(playlistId)
     console.log(playlist)
     if (!playlist) {
       return res.status(404).json({ message: 'Playlist not found' });

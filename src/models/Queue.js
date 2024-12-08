@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const queueSchema = new mongoose.Schema({
+    _id: { type: Schema.Types.ObjectId },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
