@@ -28,7 +28,7 @@ router.post('/', validateJWT, async (req, res) => {
 
     // Create or update queue
     const queue = await Queue.createOrUpdateQueue(
-      user2._id, 
+      user2.id, 
       playlistId, 
       playlist.tracks
     );
