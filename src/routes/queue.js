@@ -11,10 +11,10 @@ const validateJWT = require("../middleware/validateJWT");
 router.post('/', validateJWT, async (req, res) => {
   try {
     const { playlistId } = req.body;
-
+    console.log(req.body)
     // Fetch playlist and validate
     const playlist = await Playlist.findOne({_id: playlistId});
-    console.log(playlistId)
+    console.log({playlistId})
     console.log(playlist)
     if (!playlist) {
       return res.status(404).json({ message: 'Playlist not found' });
