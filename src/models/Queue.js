@@ -105,4 +105,4 @@ queueSchema.methods.getNextTrack = function() {
   }
 };
 
-const Queue = mongoose.model('Queue', queueSchema);
+module.exports = mongoose.model('Queue', queueSchema);
