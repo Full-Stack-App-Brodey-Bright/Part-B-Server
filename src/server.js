@@ -27,6 +27,8 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/auth', require('./routes/youtube'))
 const playlistRoutes = require('./routes/playlist');
 app.use('/api/playlists', playlistRoutes);
+const queueRoutes = require('./routes/queue');
+app.use('/api/queue', queueRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
