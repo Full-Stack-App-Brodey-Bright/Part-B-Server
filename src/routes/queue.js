@@ -129,6 +129,8 @@ router.get('/next', validateJWT, async (req, res) => {
 // Change Playback Mode
 router.patch('/mode', validateJWT, async (req, res) => {
   try {
+    let JWT = req.headers.authorization.split(' ')[1]
+    const user2 = await User.findOne({JWT: JWT})
     const { playbackMode } = req.body;
 
     // Validate playback mode
@@ -138,7 +140,7 @@ router.patch('/mode', validateJWT, async (req, res) => {
     }
 
     // Find and update queue
-    const queue = await Queue.findOne({ user: req.user._id });
+    const queue = await Queue.findOne({ user: user2.id });
     if (!queue) {
       return res.status(404).json({ message: 'No active queue found' });
     }
