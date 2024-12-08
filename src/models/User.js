@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-var Id = new mongoose.Types.ObjectId();
 const UserSchema = new mongoose.Schema({
-  _id: Id,
   username: {
     type: String,
     required: [true, 'Username is required'],
