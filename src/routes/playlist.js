@@ -123,6 +123,7 @@ router.put('/:playlistId', validateJWT, async (req, res) => {
     if (!playlist) {
       return res.status(404).json({ message: 'Playlist not found' });
     }
+    console.log(req.body)
 
     // Update playlist fields
     playlist.title = title || playlist.title;
