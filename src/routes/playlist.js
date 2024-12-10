@@ -94,6 +94,7 @@ router.get('/', validateJWT, async (req, res) => {
 
     res.json({
       playlists,
+      username: user2.username,
       total,
       page: parseInt(page),
       totalPages: Math.ceil(total / limit)
