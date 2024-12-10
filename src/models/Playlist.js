@@ -17,6 +17,9 @@ const playlistSchema = new mongoose.Schema({
       ref: 'User',
       required: true
     },
+    username: {
+      type: String
+    },
     tracks: [{
       title: {
         type: String,
