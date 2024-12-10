@@ -19,6 +19,7 @@ router.post('/', validateJWT, async (req, res) => {
       title,
       description,
       creator: user2.id,
+      username: user2.username,
       tracks: tracks || [],
       isPublic: isPublic || false,
       tags: tags || [],
@@ -94,7 +95,6 @@ router.get('/', validateJWT, async (req, res) => {
 
     res.json({
       playlists,
-      username: user2.username,
       total,
       page: parseInt(page),
       totalPages: Math.ceil(total / limit)
