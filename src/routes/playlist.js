@@ -199,15 +199,16 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
 
 
     const userIndex = playlist.likes.findIndex(
-      (_id) => _id ===
-      user._id
+      (id) => id ===
+      user.id
     )
 
+    console.log(userIndex)
     // Toggle like
     if (userIndex > -1) {
       playlist.likes.splice(userIndex, 1);
     } else {
-      playlist.likes.push(user._id);
+      playlist.likes.push(user.id);
     }
 
     // Save updated playlist
