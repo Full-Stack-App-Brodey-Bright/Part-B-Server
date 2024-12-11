@@ -198,7 +198,7 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
     }
 
     const userIndex = playlist.likes.findIndex(
-      _id => {return _id == user._id}
+      _id => {return _id === user._id}
     )
 
     console.log(userIndex)
