@@ -207,7 +207,7 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
     if (userIndex > -1) {
       playlist.likes.splice(userIndex, 1);
     } else {
-      playlist.likes.push(user);
+      playlist.likes.push(user._id);
     }
 
     // Save updated playlist
