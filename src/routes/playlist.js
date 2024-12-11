@@ -181,7 +181,7 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
 
     const user = await User.findOne({JWT: JWT})
-    console.log(user._id)
+    console.log(user.id)
   try {
     const { playlistId } = req.params;
 
@@ -199,7 +199,8 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
 
 
     const userIndex = playlist.likes.findIndex(
-      _id => _id.toString() === user._id.toString()
+      _id => _id.toString() ===
+      user._id.toString()
     )
 
     // Toggle like
