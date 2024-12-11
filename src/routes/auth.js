@@ -40,7 +40,8 @@ router.post('/register', validateRegisterInput, async (req, res) => {
     User.collection.updateOne(newUser, {$set: {JWT: token}})
 
     res.status(201).json({ 
-      message: 'User registered successfully', 
+      message: 'User registered successfully',
+      username: user.username,
       token 
     });
 
@@ -77,7 +78,8 @@ router.post('/login', async (req, res) => {
     User.collection.updateOne(user, {$set: {JWT: token}})
 
     res.json({ 
-      message: 'Login successful', 
+      message: 'Login successful',
+      username: user.username,
       token 
     });
 
