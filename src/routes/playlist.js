@@ -66,15 +66,7 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Build query
     const query = {
-      creator: user2,
-      ...(publicOnly && { isPublic: true }),
-      ...(genre && { genres: genre }),
-      ...(search && { 
-        $or: [
-          { title: { $regex: search, $options: 'i' } },
-          { description: { $regex: search, $options: 'i' } }
-        ]
-      })
+      isPublic: true
     };
 
     // Pagination and sorting
@@ -86,7 +78,14 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Fetch playlists
     let playlists = null
-    playlists = await Playlist.find({$or: [{creator: user2}, {_id : id}, {likes: user2._id}]});
+    if (!id) {
+      // if there is no id in url show all playlists
+      playlists = await Playlist.find({$or: [{creator: user2}, {likes: user2._id}]});
+    } else {
+      // if is show one playlist
+      playlists = await Playlist.find({_id: id})
+    }
+
 
     const total = await Playlist.countDocuments(query);
 
@@ -199,9 +198,6 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
 
     const userIndex = playlist.likes.indexOf(user._id)
 
-    // const userIndex = playlist.likes.findIndex(
-    //   _id => {return _id === user}
-    // )
 
     console.log(userIndex)
     // Toggle like
