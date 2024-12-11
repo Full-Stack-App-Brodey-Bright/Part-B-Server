@@ -86,11 +86,8 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Fetch playlists
     let playlists = null
-    if (!id) {
-        playlists = await Playlist.find({creator: user2});
-    } else {
-        playlists = await Playlist.find({_id: id});
-    }
+    playlists = await Playlist.find({$or: [{creator: user2}, {_id : id}, {likes: user2._id}]});
+
     const total = await Playlist.countDocuments(query);
 
     res.json({
