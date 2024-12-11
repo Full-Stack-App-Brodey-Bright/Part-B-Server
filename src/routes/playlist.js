@@ -67,7 +67,7 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Build query
     const query = {
-      isPublic: all || false
+      isPublic: all === 'true'
     };
 
     // Pagination and sorting
