@@ -180,7 +180,7 @@ router.delete('/:playlistId', validateJWT, async (req, res) => {
 router.post('/:playlistId/like', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
 
-    const userid = await User.findOne({JWT: JWT})._id
+    const userid = await User.findOne({JWT: JWT}).id
   try {
     const { playlistId } = req.params;
 
