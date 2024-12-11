@@ -197,7 +197,7 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
     }
 
     const userIndex = playlist.likes.findIndex(
-      id => id.toString() === userid.toString()
+      _id => _id.toString() === userid.toString()
     );
 
     // Toggle like
