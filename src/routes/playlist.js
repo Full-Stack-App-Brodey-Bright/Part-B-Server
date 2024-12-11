@@ -196,9 +196,11 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
       return res.status(403).json({ message: 'Cannot like private playlist' });
     }
 
-    const userIndex = playlist.likes.findIndex(
-      _id => _id.toString() === userid.toString()
-    );
+    if (playlist.likes.id) {
+      const userIndex = playlist.likes.findIndex(
+        id => id.toString() === userid.toString()
+      );
+    }
 
     // Toggle like
     if (userIndex > -1) {
