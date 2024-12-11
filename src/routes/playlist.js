@@ -180,8 +180,8 @@ router.delete('/:playlistId', validateJWT, async (req, res) => {
 router.post('/:playlistId/like', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
 
-    const userid = await User.findOne({JWT: JWT}.id)
-    console.log(userid)
+    const user = await User.findOne({JWT: JWT})
+    console.log(user._id)
   try {
     const { playlistId } = req.params;
 
@@ -193,20 +193,20 @@ router.post('/:playlistId/like', validateJWT, async (req, res) => {
     }
 
     // Check if playlist is public or user's own playlist
-    if (!playlist.isPublic && playlist.creator.toString() !== userid.toString()) {
+    if (!playlist.isPublic && playlist.creator.toString() !== user.toString()) {
       return res.status(403).json({ message: 'Cannot like private playlist' });
     }
 
 
     const userIndex = playlist.likes.findIndex(
-      _id => _id.toString() === userid.toString()
+      _id => _id.toString() === user._id.toString()
     )
 
     // Toggle like
     if (userIndex > -1) {
       playlist.likes.splice(userIndex, 1);
     } else {
-      playlist.likes.push(userid);
+      playlist.likes.push(user);
     }
 
     // Save updated playlist
