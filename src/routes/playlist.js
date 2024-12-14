@@ -57,7 +57,7 @@ router.get('/', validateJWT, async (req, res) => {
     const { 
       page = 1, 
       limit = 10, 
-      search = '', 
+      searchQuery, 
       genre, 
       publicOnly = false,
       id,
@@ -67,7 +67,7 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Build query
     const query = {
-      isPublic: all === 'true'
+      isPublic: all === 'true',
     };
 
     // Pagination and sorting
@@ -79,9 +79,26 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Fetch playlists
     let playlists = null
-    if (!id) {
+    if (!id && !searchQuery) {
       // if there is no id in url show all playlists
       playlists = await Playlist.find({$or: [{creator: user2}, {likes: user2._id}, query]});
+    }else if (searchQuery) {
+      playlists = await Playlist.aggregate([
+        {
+          $search: {
+            index: "playlist",
+            text: {
+              query: searchQuery,
+              path: "title",
+              fuzzy: {
+                maxEdits: 2,
+                prefixLength: 0,
+                maxExpansions: 50
+              }
+            }
+          }
+        }
+      ])
     } else {
       // if is show one playlist
       playlists = await Playlist.find({_id: id})

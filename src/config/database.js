@@ -10,12 +10,9 @@ const connectDB = async () => {
     }
 };
 
-async function dbDrop() {
-    await mongoose.connection.db.dropDatabase();
-}
 
-async function disconnectDB() {
-    await mongoose.connection.close();
+async function indexes() {
+    
 }
 
 
