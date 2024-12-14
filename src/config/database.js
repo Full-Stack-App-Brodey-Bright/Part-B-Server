@@ -18,6 +18,4 @@ async function indexes() {
 
 module.exports = {
     connectDB,
-    dbDrop,
-    disconnectDB,
 };
