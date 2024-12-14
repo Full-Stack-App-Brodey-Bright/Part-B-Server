@@ -92,17 +92,12 @@ router.get('/', validateJWT, async (req, res) => {
               query: searchQuery,
               path: {
                 wildcard: "*"
-              },
-              fuzzy: {
-                maxEdits: 2,
-                prefixLength: 0,
-                maxExpansions: 50
               }
             }
           }
         }
       ])
-      console.log(playlists)
+      console.log(await playlists)
     } else {
       // if is show one playlist
       playlists = await Playlist.find({_id: id})
