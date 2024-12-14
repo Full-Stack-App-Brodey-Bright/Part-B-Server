@@ -11,11 +11,6 @@ const connectDB = async () => {
 };
 
 
-async function indexes() {
-    
-}
-
-
 module.exports = {
     connectDB,
 };

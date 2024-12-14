@@ -79,7 +79,7 @@ router.get('/', validateJWT, async (req, res) => {
 
     // Fetch playlists
     let playlists = null
-    if (!id && !searchQuery) {
+    if (!id & !searchQuery) {
       // if there is no id in url show all playlists
       playlists = await Playlist.find({$or: [{creator: user2}, {likes: user2._id}, query]});
     }else if (searchQuery) {
