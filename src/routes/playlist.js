@@ -83,13 +83,16 @@ router.get('/', validateJWT, async (req, res) => {
       // if there is no id in url show all playlists
       playlists = await Playlist.find({$or: [{creator: user2}, {likes: user2._id}, query]});
     }else if (!searchQuery === 'false') {
+      console.log('aggregate')
       playlists = await Playlist.aggregate([
         {
           $search: {
             index: "playlist",
             text: {
               query: searchQuery,
-              path: "title",
+              path: {
+                wildcard: "*"
+              },
               fuzzy: {
                 maxEdits: 2,
                 prefixLength: 0,
@@ -99,6 +102,7 @@ router.get('/', validateJWT, async (req, res) => {
           }
         }
       ])
+      console.log(playlists)
     } else {
       // if is show one playlist
       playlists = await Playlist.find({_id: id})
