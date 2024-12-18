@@ -22,6 +22,7 @@ router.get("/:userId", validateJWT, async (req, res) => {
 
         const userDetails = {
             username: user.username,
+            id: user.id,
             followers: user.followers,
             following: user.following,
         }
