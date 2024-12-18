@@ -42,6 +42,7 @@ router.post('/register', validateRegisterInput, async (req, res) => {
     res.status(201).json({ 
       message: 'User registered successfully',
       username: user.username,
+      id: user._id,
       token 
     });
 
@@ -80,6 +81,7 @@ router.post('/login', async (req, res) => {
     res.json({ 
       message: 'Login successful',
       username: user.username,
+      id: user._id,
       token 
     });
 

@@ -18,7 +18,8 @@ router.get("/:userId", validateJWT, async (req, res) => {
                 "Error token was not provided. Please login first."
             );
         }
-        
+    
+
         const userDetails = {
             username: user.username,
             followers: user.followers,
