@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Playlist = require("../models/Playlist");
-const User = require("../models/User");
+const { User, Notification } = require("../models/User");
 const validateJWT = require("../middleware/validateJWT");
 const { Error } = require("mongoose");
 
@@ -129,7 +129,6 @@ router.post('/:userId/follow', validateJWT, async (req, res) => {
     let JWT = req.headers.authorization.split(' ')[1]
 
     const currentUser = await User.findOne({JWT: JWT})
-    console.log(currentUser.id)
   try {
     const { userId } = req.params;
 
@@ -155,6 +154,7 @@ router.post('/:userId/follow', validateJWT, async (req, res) => {
     } else {
       user.followers.push(currentUser);
       currentUser.following.push(user);
+      await user.createNotification('follow', currentUser._id);
     }
 
     // Save updated users

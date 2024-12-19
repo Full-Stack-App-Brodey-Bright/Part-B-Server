@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+const { User } = require('../models/User');
 const { validateRegisterInput } = require('../middleware/validateRegisterInput.js')
 
 // User Registration Route
@@ -68,6 +68,8 @@ router.post('/login', async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid credentials' });
     }
+
+    user.deleteOldNotifications()
 
     // Generate JWT token
     const token = jwt.sign(

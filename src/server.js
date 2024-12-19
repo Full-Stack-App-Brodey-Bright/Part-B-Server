@@ -30,6 +30,7 @@ app.use('/api/playlists', playlistRoutes);
 const queueRoutes = require('./routes/queue');
 app.use('/api/queue', queueRoutes);
 app.use('/api/user', require('./routes/user'));
+app.use('/api/notifications', require('./routes/notifications'))
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
