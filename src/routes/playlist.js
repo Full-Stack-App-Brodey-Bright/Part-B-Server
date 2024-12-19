@@ -38,7 +38,7 @@ router.post("/", validateJWT, async (req, res) => {
         });
 
         followers.forEach(async (follower) => {
-            await follower.createNotification("playlist", user2._id, savedPlaylist._id);
+            await follower.createNotification("playlist", user2._id, savedPlaylist._id, savedPlaylist.title);
         });
 
         res.status(201).json({
@@ -218,13 +218,17 @@ router.post("/:playlistId/like", validateJWT, async (req, res) => {
     try {
         const { playlistId } = req.params;
 
+        
+
         // Find the playlist
         const playlist = await Playlist.findById(playlistId);
-        const creator = await User.findById(playlist.creator)
 
         if (!playlist) {
             return res.status(404).json({ message: "Playlist not found" });
         }
+
+        console.log(playlist)
+        const creator = await User.findById(playlist.creator)
 
         // Check if playlist is public or user's own playlist
         if (
@@ -244,7 +248,7 @@ router.post("/:playlistId/like", validateJWT, async (req, res) => {
             playlist.likes.splice(userIndex, 1);
         } else {
             playlist.likes.push(user);
-            await creator.createNotification("like", user._id, playlistId);
+            await creator.createNotification("like", user._id, playlistId, playlist.title);
         }
 
         // Save updated playlist

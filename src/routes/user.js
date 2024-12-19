@@ -154,7 +154,7 @@ router.post('/:userId/follow', validateJWT, async (req, res) => {
     } else {
       user.followers.push(currentUser);
       currentUser.following.push(user);
-      await user.createNotification('follow', currentUser._id, null);
+      await user.createNotification('follow', currentUser._id, null, null);
     }
 
     // Save updated users

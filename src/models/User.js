@@ -23,6 +23,9 @@ const notificationSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Playlist",
     },
+    playlistTitle: {
+        type: String,
+    },
     read: {
         type: Boolean,
         default: false,
@@ -101,12 +104,13 @@ const UserSchema = new mongoose.Schema(
 );
 
 // Create notification function
-UserSchema.methods.createNotification = async function (type, actor, playlist) {
+UserSchema.methods.createNotification = async function (type, actor, playlist, playlistTitle) {
     const notification = await Notification.create({
         recipient: this._id,
         type,
         actor,
         playlist,
+        playlistTitle,
         read: false,
     });
 
