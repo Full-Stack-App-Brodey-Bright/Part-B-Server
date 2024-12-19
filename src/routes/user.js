@@ -58,7 +58,71 @@ router.get("/:userId", validateJWT, async (req, res) => {
         });
     }
 });
+    // search users
+router.get("/", validateJWT, async (req, res) => {
+    let JWT = req.headers.authorization.split(" ")[1];
+    const currentUser = await User.findOne({ JWT: JWT });
+    const { searchQuery } = req.query;
+    try {
+        if (!currentUser) {
+            throw new Error(
+                "Error token was not provided. Please login first."
+            );
+        }
+    
 
+        // const userDetails = {
+        //     username: user.username,
+        //     id: user.id,
+        //     followers: user.followers,
+        //     following: user.following,
+        // }
+
+        // Pagination and sorting
+        // const options = {
+        //   limit: parseInt(limit),
+        //   skip: (page - 1) * limit,
+        //   sort: { createdAt: -1 }
+        // };
+
+        // Fetch playlists
+        let users = null;
+        if (searchQuery !== 'false' && searchQuery) {
+              console.log('aggregate')
+              users = await User.aggregate([
+                {
+                  $search: {
+                    index: "user",
+                    autocomplete: {
+                      query: searchQuery,
+                      path: "username",
+                      fuzzy: {
+                        maxEdits: 2,
+                        prefixLength: 0,
+                        maxExpansions: 50
+                      }
+                    }
+                  }
+                }
+              ])
+              console.log(await users)
+            } else {
+                throw new Error(
+                    "Search query not provided."
+                );
+            }
+
+        res.json({
+            users
+        });
+    } catch (error) {
+        console.error("User retrieval error:", error);
+        res.status(500).json({
+            message: "Error retrieving user",
+            error: error.message,
+        });
+    }
+});
 // follow and unfollow user by id
 
 router.post('/:userId/follow', validateJWT, async (req, res) => {
