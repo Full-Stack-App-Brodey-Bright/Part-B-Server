@@ -38,7 +38,7 @@ router.post("/", validateJWT, async (req, res) => {
         });
 
         followers.forEach(async (follower) => {
-            await follower.createNotification("playlist", user2._id);
+            await follower.createNotification("playlist", user2._id, savedPlaylist._id);
         });
 
         res.status(201).json({
@@ -244,7 +244,7 @@ router.post("/:playlistId/like", validateJWT, async (req, res) => {
             playlist.likes.splice(userIndex, 1);
         } else {
             playlist.likes.push(user);
-            await creator.createNotification("like", user._id);
+            await creator.createNotification("like", user._id, playlistId);
         }
 
         // Save updated playlist
