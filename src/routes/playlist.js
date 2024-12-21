@@ -152,9 +152,9 @@ router.put("/:playlistId", validateJWT, async (req, res) => {
         const { title, description, tracks, isPublic, tags, genres } = req.body;
 
         // Find the playlist and ensure user is the creator
+        console.log(playlistId)
         const playlist = await Playlist.findOne({
-            _id: playlistId,
-            creator: await User.findOne({ JWT: JWT }._id),
+            _id: playlistId
         });
 
         if (!playlist) {
